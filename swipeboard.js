@@ -1,10 +1,22 @@
 onload = function(){
 
+    //define text area
+
+    var text = document.getElementById("text");
+    text.style.width = innerWidth-40 + "px";
+    text.style.height = "80px";
+    text.intext = function(x,y){
+        var r = this.getBoundingClientRect();
+        return r.left <= x && x < r.right &&
+            r.top <= y && y < r.bottom;
+    }
+
     //define swipeboard division
 
     var swipeboard = document.getElementById("swipeboard");
     var deviceWidthMm = 50;
-    swipeboard.width = 12 * innerWidth / deviceWidthMm;
+    //swipeboard.width = 12 * innerWidth / deviceWidthMm;
+    swipeboard.width = 77;
     swipeboard.style.width = swipeboard.width + "px";
     swipeboard.style.height = swipeboard.width + "px";
     swipeboard.style.left = (innerWidth-swipeboard.width)/2 + "px";
@@ -15,7 +27,11 @@ onload = function(){
             r.top <= y && y < r.bottom;
     }
 
+    //define swipeboard actions
+
     swipeboard.touch = {on: false, t: undefined, x: undefined, y: undefined};
+
+    swipeboard.state = "fgh";
 
     swipeboard.action = function(x,y){
         var dist = (x-this.touch.x)*(x-this.touch.x) +
@@ -46,6 +62,9 @@ onload = function(){
 
     swipeboard.tap = function(){
         document.getElementById("action").innerHTML = "tap";
+        if(this.state == "fgh"){
+            text.value += "g";
+        }
     }
 
     swipeboard.swipeUp = function(){
@@ -58,6 +77,9 @@ onload = function(){
 
     swipeboard.swipeRight = function(){
         document.getElementById("action").innerHTML = "swipe right";
+        if(this.state == "fgh"){
+            text.value += "h";
+        }
     }
 
     swipeboard.swipeRightUp = function(){
@@ -70,6 +92,9 @@ onload = function(){
 
     swipeboard.swipeLeft = function(){
         document.getElementById("action").innerHTML = "swipe left";
+        if(this.state == "fgh"){
+            text.value += "f";
+        }
     }
 
     swipeboard.swipeLeftUp = function(){
@@ -81,7 +106,7 @@ onload = function(){
     }
 
 
-    //define action event
+    //define touch event
 
     document.addEventListener("touchstart", function(e){
         e.preventDefault();
@@ -93,6 +118,7 @@ onload = function(){
             swipeboard.touch.t = d.getTime();
             swipeboard.touch.on = true;
         }
+
     }, false);
 
     document.addEventListener("touchmove", function(e){
