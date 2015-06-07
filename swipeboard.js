@@ -4,7 +4,7 @@ onload = function(){
 
     var text = document.getElementById("text");
     text.style.width = innerWidth-40 + "px";
-    text.style.height = "80px";
+    text.style.height = "120px";
     text.style["font-size"] = "14px";
     text.intext = function(x,y){
         var r = this.getBoundingClientRect();
@@ -12,12 +12,24 @@ onload = function(){
             r.top <= y && y < r.bottom;
     }
 
+    text.value = "_";
+    text.addCharacter = function(ch){
+        this.value = this.value.substr(0, this.value.length-1);
+        this.value += (ch + "_");
+    }
+
+    text.remove_character = function(){
+        this.value = this.value.substr(0, this.value.length-2);
+        this.value += "_";
+    }
+
+
     //define swipeboard division
 
     var swipeboard = document.getElementById("swipeboard");
     var deviceWidthMm = 50;
     //swipeboard.width = 12 * innerWidth / deviceWidthMm;
-    swipeboard.width = 77;
+    swipeboard.width = 78;
     swipeboard.style.width = swipeboard.width + "px";
     swipeboard.style.height = swipeboard.width + "px";
     swipeboard.style.left = (innerWidth-swipeboard.width)/2 + "px";
@@ -58,55 +70,55 @@ onload = function(){
             this.swipeLeftUp();
         else if(0.4 < grad && grad <= 2.4 && x >= this.touch.x)
             this.swipeRightDown();
-        else document.getElementById("action").innerHTML = "unknown";
+        //else //document.getElementById("action").innerHTML = "unknown";
 
         chars.setChars(this.state);
 
     }
 
     swipeboard.tap = function(){
-        document.getElementById("action").innerHTML = "tap";
+        //document.getElementById("action").innerHTML = "tap";
         switch(this.state){
         case "all":
             this.state = "fgh";
             break;
         case "qwe":
-            text.value += "w";
+            text.addCharacter("w");
             this.state = "all";
             break;
         case "iop":
-            text.value += "o";
+            text.addCharacter("o");
             this.state = "all";
             break;
         case "asd":
-            text.value += "s";
+            text.addCharacter("s");
             this.state = "all";
             break;
         case "fgh":
-            text.value += "g";
+            text.addCharacter("g");
             this.state = "all";
             break;
         case "jkl":
-            text.value += "k";
+            text.addCharacter("k");
             this.state = "all";
             break;
         case "zxc":
-            text.value += "x";
+            text.addCharacter("x");
             this.state = "all";
             break;
         case "vbn":
-            text.value += "b";
+            text.addCharacter("b");
             this.state = "all";
             break;
         case "m,.":
-            text.value += ",";
+            text.addCharacter(",");
             this.state = "all";
             break;
         }
     }
 
     swipeboard.swipeUp = function(){
-        document.getElementById("action").innerHTML = "swipe up";
+        //document.getElementById("action").innerHTML = "swipe up";
         switch(this.state){
         case "all":
             this.state = "rtyu";
@@ -115,7 +127,7 @@ onload = function(){
     }
 
     swipeboard.swipeDown = function(){
-        document.getElementById("action").innerHTML = "swipe down";
+        //document.getElementById("action").innerHTML = "swipe down";
         switch(this.state){
         case "all":
             this.state = "vbn";
@@ -127,138 +139,141 @@ onload = function(){
     }
 
     swipeboard.swipeRight = function(){
-        document.getElementById("action").innerHTML = "swipe right";
+        //document.getElementById("action").innerHTML = "swipe right";
         switch(this.state){
         case "all":
             this.state = "jkl";
             break;
         case "qwe":
-            text.value += "e";
+            text.addCharacter("e");
             this.state = "all";
             break;
         case "rtyu":
-            text.value += "u";
+            text.addCharacter("u");
             this.state = "all";
             break;
         case "iop":
-            text.value += "p";
+            text.addCharacter("p");
             this.state = "all";
             break;
         case "asd":
-            text.value += "d";
+            text.addCharacter("d");
             this.state = "all";
             break;
         case "fgh":
-            text.value += "h";
+            text.addCharacter("h");
             this.state = "all";
             break;
         case "jkl":
-            text.value += "l";
+            text.addCharacter("l");
             this.state = "all";
             break;
         case "zxc":
-            text.value += "c";
+            text.addCharacter("c");
             this.state = "all";
             break;
         case "vbn":
-            text.value += "n";
+            text.addCharacter("n");
             this.state = "all";
             break;
         case "m,.":
-            text.value += ".";
+            text.addCharacter(".");
             this.state = "all";
             break;
         }
     }
 
     swipeboard.swipeRightUp = function(){
-        document.getElementById("action").innerHTML = "swipe right up";
+        //document.getElementById("action").innerHTML = "swipe right up";
         switch(this.state){
         case "all":
             this.state = "iop";
             break;
         case "rtyu":
-            text.value += "y";
+            text.addCharacter("y");
             this.state = "all";
             break;
         }
     }
 
     swipeboard.swipeRightDown = function(){
-        document.getElementById("action").innerHTML = "swipe right down";
+        //document.getElementById("action").innerHTML = "swipe right down";
         switch(this.state){
         case "all":
             this.state = "m,.";
             break;
+        case "m,.":
+            text.addCharacter(" ");
+            this.state = "all";
         }
     }
 
     swipeboard.swipeLeft = function(){
-        document.getElementById("action").innerHTML = "swipe left";
+        //document.getElementById("action").innerHTML = "swipe left";
         switch(this.state){
         case "all":
             this.state = "asd";
             break;
         case "qwe":
-            text.value += "q";
+            text.addCharacter("q");
             this.state = "all";
             break;
         case "rtyu":
-            text.value += "r";
+            text.addCharacter("r");
             this.state = "all";
             break;
         case "iop":
-            text.value += "i";
+            text.addCharacter("i");
             this.state = "all";
             break;
         case "asd":
-            text.value += "a";
+            text.addCharacter("a");
             this.state = "all";
             break;
         case "fgh":
-            text.value += "f";
+            text.addCharacter("f");
             this.state = "all";
             break;
         case "jkl":
-            text.value += "j";
+            text.addCharacter("j");
             this.state = "all";
             break;
         case "zxc":
-            text.value += "z";
+            text.addCharacter("z");
             this.state = "all";
             break;
         case "vbn":
-            text.value += "v";
+            text.addCharacter("v");
             this.state = "all";
             break;
         case "m,.":
-            text.value += "m";
+            text.addCharacter("m");
             this.state = "all";
             break;
         }
     }
 
     swipeboard.swipeLeftUp = function(){
-        document.getElementById("action").innerHTML = "swipe left up";
+        //document.getElementById("action").innerHTML = "swipe left up";
         switch(this.state){
         case "all":
             this.state = "qwe";
             break;
         case "rtyu":
-            text.value += "t";
+            text.addCharacter("t");
             this.state = "all";
             break;
         }
     }
 
     swipeboard.swipeLeftDown = function(){
-        document.getElementById("action").innerHTML = "swipe left down";
+        //document.getElementById("action").innerHTML = "swipe left down";
         switch(this.state){
         case "all":
             this.state = "zxc";
             break;
         case "zxc":
-            text.value = text.value.slice(0,-1);
+            text.remove_character();
             this.state = "all";
             break;
         }
@@ -268,6 +283,12 @@ onload = function(){
 
     chars = document.getElementById("chars");
 
+    chars.width = swipeboard.width;
+    chars.style.height = chars.width + "px";
+    chars.style.width = chars.width + "px";
+    chars.src = "all.png";
+
+    /*
     chars.secondChars = function(str){
         chars.style["font-size"] = "25px";
         chars.height = 45;
@@ -277,51 +298,65 @@ onload = function(){
         chars.style["margin-bottom"] = (swipeboard.width-chars.height)/2 + "px";
     }
 
+    /*
     chars.firstChars = function(){
+
+
         chars.style["font-size"] = "11.5px";
         chars.height = 45;
         chars.style["height"] = chars.height + "px";
         chars.innerHTML = "qwe rtyu iop<br>asd fgh jkl<br>zxc vbn m,.";
         chars.style["margin-top"] = (swipeboard.width-chars.height)/2 + "px";
         chars.style["margin-bottom"] = (swipeboard.width-chars.height)/2 + "px";
-    }
+      }
+    */
 
     chars.setChars = function(state){
         switch(state){
         case "all":
-            this.firstChars();
+            //this.firstChars();
+            this.src = "all.png";
             break;
         case "qwe":
-            this.secondChars("q w e");
+            //this.secondChars("q w e");
+            this.src = "qwe.png";
             break;
         case "rtyu":
-            this.secondChars("r t y u");
+            //this.secondChars("r t y u");
+            this.src = "rtyu.png";
             break;
         case "iop":
-            this.secondChars("i o p");
+            //this.secondChars("i o p");
+            this.src = "iop.png";
             break;
         case "asd":
-            this.secondChars("a s d");
+            //this.secondChars("a s d");
+            this.src = "asd.png";
             break;
         case "fgh":
-            this.secondChars("f g h");
+            //this.secondChars("f g h");
+            this.src = "fgh.png";
             break;
         case "jkl":
-            this.secondChars("j k l");
+            //this.secondChars("j k l");
+            this.src = "jkl.png";
             break;
         case "zxc":
-            this.secondChars("z x c");
+            //this.secondChars("z x c");
+            this.src = "zxc.png";
             break;
         case "vbn":
-            this.secondChars("v b n");
+            //this.secondChars("v b n");
+            this.src = "vbn.png";
             break;
         case "m,.":
-            this.secondChars("m , .");
+            //this.secondChars("m , .");
+            this.src = "m_col.png";
             break;
         }
     }
 
-    chars.firstChars();
+    //chars.firstChars();
 
     //define touch event
 
